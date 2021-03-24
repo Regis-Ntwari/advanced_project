@@ -60,7 +60,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         session.close();
         return visit;
     }
-    public List<Visitation> findAllVisitationsByRequestStatus(VisitationRequestStatus vrs){
+    public List<Visitation> findAllVisitationsByRequestStatus(VisitationRequestStatus vrs, Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -68,6 +68,8 @@ public class VisitationDao implements DaoInterface<Visitation>{
             CriteriaQuery<Visitation> query = builder.createQuery(Visitation.class);
             Root<Visitation> root = query.from(Visitation.class);
             
+            query.select(root).where(builder.and(builder.equal(root.get("requestStatus"), vrs), 
+                                                builder.equal(root.get("museum"), museum)));
             query.select(root).where(builder.equal(root.get("requestStatus"), vrs));
             Query<Visitation> q = session.createQuery(query);
             visits = q.list();
@@ -77,7 +79,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         }
         return visits;
     }
-    public List<Visitation> findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus vos){
+    public List<Visitation> findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus vos, Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -85,7 +87,8 @@ public class VisitationDao implements DaoInterface<Visitation>{
             CriteriaQuery<Visitation> query = builder.createQuery(Visitation.class);
             Root<Visitation> root = query.from(Visitation.class);
             
-            query.select(root).where(builder.equal(root.get("occurrenceStatus"), vos));
+            query.select(root).where(builder.and(builder.equal(root.get("museum"), museum), 
+                                                builder.equal(root.get("occurrenceStatus"), vos)));
             Query<Visitation> q = session.createQuery(query);
             
             visits = q.list();
@@ -94,7 +97,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         }
         return visits;
     }
-    public List<Visitation> findAllTodayVisitation(){
+    public List<Visitation> findAllTodayVisitation(Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
@@ -102,7 +105,8 @@ public class VisitationDao implements DaoInterface<Visitation>{
             CriteriaQuery<Visitation> query = builder.createQuery(Visitation.class);
             Root<Visitation> root = query.from(Visitation.class);
             
-            query.select(root).where(builder.equal(root.get("visitationDate"), LocalDate.now()));
+            query.select(root).where(builder.and(builder.equal(root.get("museum"), museum), 
+                                                builder.equal(root.get("visitationDate"), LocalDate.now())));
             Query<Visitation> q = session.createQuery(query);
             
             visits = q.list();
@@ -111,23 +115,5 @@ public class VisitationDao implements DaoInterface<Visitation>{
             e.printStackTrace();
         }
         return visits;
-    }
-    public List<Visitation> findAllMuseumVisitation(Museum museum){
-        List<Visitation> visits = new ArrayList<>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<Visitation> query = builder.createQuery(Visitation.class);
-            Root<Visitation> root = query.from(Visitation.class);
-            
-            query.select(root).where(builder.equal(root.get("museum"), museum));
-            
-            Query<Visitation> q = session.createQuery(query);
-            visits = q.list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return visits;
-    }
-    
+    } 
 }

@@ -61,33 +61,33 @@ public class VisitationService {
         visitationDao.update(visit);
     }
 
-    public List<Visitation> findAllVisitationOfCertainMuseum(int museumId) {
+    public List<Visitation> findAllTodayVisitation(int museumId) {
         Museum m = museumDao.findById(museumId);
-        List<Visitation> visits = visitationDao.findAllMuseumVisitation(m);
-        return visits;
+        return visitationDao.findAllTodayVisitation(m);
     }
 
-    public List<Visitation> findAllTodayVisitation() {
-        return visitationDao.findAllTodayVisitation();
+    public List<Visitation> findAllPendingVisitation(int museumId) {
+        Museum m = museumDao.findById(museumId);
+        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.PENDING, m);
     }
 
-    public List<Visitation> findAllPendingVisitation() {
-        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.PENDING);
+    public List<Visitation> findAllApprovedVisitation(int museumId) {
+        Museum m = museumDao.findById(museumId);
+        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.APPROVED, m);
     }
 
-    public List<Visitation> findAllApprovedVisitation() {
-        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.APPROVED);
+    public List<Visitation> findAllCancelledVisitation(int museumId) {
+        Museum m = museumDao.findById(museumId);
+        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.CANCELLED, m);
     }
 
-    public List<Visitation> findAllCancelledVisitation() {
-        return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.CANCELLED);
+    public List<Visitation> findAllNonOccurredVisitation(int museumId) {
+        Museum m = museumDao.findById(museumId);
+        return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.NOT_OCCURRED, m);
     }
 
-    public List<Visitation> findAllNonOccurredVisitation() {
-        return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.NOT_OCCURRED);
-    }
-
-    public List<Visitation> findAllOccurredVisitation() {
-        return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.OCCURRED);
+    public List<Visitation> findAllOccurredVisitation(int museumId) {
+        Museum m = museumDao.findById(museumId);
+        return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.OCCURRED, m);
     }
 }

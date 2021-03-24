@@ -83,5 +83,11 @@ public class UserDao implements UserDaoInterface<User>{
         session.close();
         return users;
     }
+    public User findByStaffId(int id){
+        session = HibernateUtil.getSessionFactory().openSession();
+        Staff u = session.get(Staff.class, id);
+        session.close();
+        return u;
+    }
     
 }
