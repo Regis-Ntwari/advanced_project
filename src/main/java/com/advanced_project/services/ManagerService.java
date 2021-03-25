@@ -9,8 +9,8 @@ import com.avanced_project.domain.Staff;
 import com.avanced_project.domain.StaffWorkingStatus;
 import com.avanced_project.domain.Visitation;
 import com.avanced_project.domain.VisitationRequestStatus;
-import com.pupa.advanced_project.dao.UserDao;
-import com.pupa.advanced_project.dao.VisitationDao;
+import com.advanced_project.dao.UserDao;
+import com.advanced_project.dao.VisitationDao;
 
 /**
  *

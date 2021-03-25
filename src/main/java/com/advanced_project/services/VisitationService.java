@@ -5,16 +5,17 @@
  */
 package com.advanced_project.services;
 
+import com.advanced_project.utils.EmailUtil;
 import com.avanced_project.domain.Museum;
 import com.avanced_project.domain.Visitation;
 import com.avanced_project.domain.VisitationOccurrenceStatus;
 import com.avanced_project.domain.VisitationRequestStatus;
 import com.avanced_project.domain.Visitor;
-import com.pupa.advanced_project.dao.DaoInterface;
-import com.pupa.advanced_project.dao.MuseumDao;
-import com.pupa.advanced_project.dao.UserDao;
-import com.pupa.advanced_project.dao.UserDaoInterface;
-import com.pupa.advanced_project.dao.VisitationDao;
+import com.advanced_project.dao.DaoInterface;
+import com.advanced_project.dao.MuseumDao;
+import com.advanced_project.dao.UserDao;
+import com.advanced_project.dao.UserDaoInterface;
+import com.advanced_project.dao.VisitationDao;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,18 +42,30 @@ public class VisitationService {
         visit.setOccurrenceStatus(VisitationOccurrenceStatus.NOT_OCCURRED);
 
         visitationDao.save(visit);
+        if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
+            EmailUtil.sendApprovalEmail(visit);
+
+        }
     }
 
     public void cancelVisitation(int visitationId) {
         Visitation visit = visitationDao.findById(visitationId);
         visit.setRequestStatus(VisitationRequestStatus.CANCELLED);
         visitationDao.update(visit);
+        if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
+            EmailUtil.sendApprovalEmail(visit);
+
+        }
     }
 
     public void approveVisitation(int visitationId) {
         Visitation visit = visitationDao.findById(visitationId);
         visit.setRequestStatus(VisitationRequestStatus.APPROVED);
         visitationDao.update(visit);
+        if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
+            EmailUtil.sendApprovalEmail(visit);
+
+        }
     }
 
     public void occurVisitation(int visitationId) {
