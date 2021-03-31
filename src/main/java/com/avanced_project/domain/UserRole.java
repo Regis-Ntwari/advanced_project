@@ -9,6 +9,6 @@ package com.avanced_project.domain;
  *
  * @author regis
  */
-public enum StaffRole {
-    MANAGER,RECEPTIONIST
+public enum UserRole {
+    MANAGER,RECEPTIONIST,ADMIN
 }

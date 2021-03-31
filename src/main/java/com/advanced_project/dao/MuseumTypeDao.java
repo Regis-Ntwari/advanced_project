@@ -5,8 +5,12 @@
  */
 package com.advanced_project.dao;
 
+import com.advanced_project.interfaces.DaoInterface;
 import com.avanced_project.domain.MuseumType;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 
 /**
@@ -37,7 +41,13 @@ public class MuseumTypeDao implements DaoInterface<MuseumType>{
     @Override
     public List<MuseumType> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
-        List<MuseumType> types = session.createQuery("from MuseumType").list();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<MuseumType> query = builder.createQuery(MuseumType.class);
+        Root<MuseumType> root = query.from(MuseumType.class);
+        
+        query.select(root);
+        
+        List<MuseumType> types = session.createQuery(query).list();
         session.close();
         return types;
     }

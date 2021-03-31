@@ -6,8 +6,7 @@
 package com.advanced_project.dao;
 
 import com.advanced_project.interfaces.DaoInterface;
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.Visitor;
+import com.avanced_project.domain.VisitationStatus;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,11 +17,11 @@ import org.hibernate.Session;
  *
  * @author regis
  */
-public class MuseumDao implements DaoInterface<Museum>{
+public class VisitationStatusDao implements DaoInterface<VisitationStatus>{
 
     private Session session;
     @Override
-    public void save(Museum t) {
+    public void save(VisitationStatus t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(t);
@@ -31,7 +30,7 @@ public class MuseumDao implements DaoInterface<Museum>{
     }
 
     @Override
-    public void update(Museum t) {
+    public void update(VisitationStatus t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(t);
@@ -40,25 +39,24 @@ public class MuseumDao implements DaoInterface<Museum>{
     }
 
     @Override
-    public List<Museum> findAll() {
+    public List<VisitationStatus> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Museum> query = builder.createQuery(Museum.class);
-        Root<Museum> root = query.from(Museum.class);
+        CriteriaQuery<VisitationStatus> query = builder.createQuery(VisitationStatus.class);
+        Root<VisitationStatus> root = query.from(VisitationStatus.class);
         
         query.select(root);
-        
-        List<Museum> museums = session.createQuery(query).list();
+        List<VisitationStatus> report = session.createQuery(query).getResultList();
         session.close();
-        return museums;
+        return report;
     }
 
     @Override
-    public Museum findById(int id) {
+    public VisitationStatus findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Museum museum = session.get(Museum.class, id);
+        VisitationStatus status = session.get(VisitationStatus.class, id);
         session.close();
-        return museum;
+        return status;
     }
     
 }

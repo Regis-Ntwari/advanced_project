@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avanced_project.domain;
+package com.advanced_project.interfaces;
 
 /**
  *
  * @author regis
+ * @param <T>
  */
-public enum StaffWorkingStatus {
-    ACTIVE,SUSPENDED,FIRED
+public interface VisitorDaoInterface<T> extends DaoInterface<T> {
+    T findByUsername(String username);
 }

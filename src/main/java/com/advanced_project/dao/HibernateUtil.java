@@ -1,14 +1,13 @@
 package com.advanced_project.dao;
 
 
-import com.avanced_project.domain.Admin;
 import com.avanced_project.domain.Museum;
 import com.avanced_project.domain.MuseumType;
-import com.avanced_project.domain.Staff;
 import com.avanced_project.domain.User;
 import com.avanced_project.domain.Visitation;
 import com.avanced_project.domain.Visitor;
 import java.util.Properties;
+import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -51,8 +50,6 @@ public class HibernateUtil {
                 
                 // adding our classes to our configuration
                 
-                configuration.addAnnotatedClass(Admin.class);
-                configuration.addAnnotatedClass(Staff.class);
                 configuration.addAnnotatedClass(MuseumType.class);
                 configuration.addAnnotatedClass(Museum.class);
                 configuration.addAnnotatedClass(Visitor.class);
@@ -60,7 +57,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(User.class);
                 
                 sessionFactory = configuration.buildSessionFactory();
-            } catch (Exception e) {
+            } catch (HibernateException e) {
                 e.printStackTrace();
             }
         }

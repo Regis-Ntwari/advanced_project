@@ -5,8 +5,7 @@
  */
 package com.advanced_project.dao;
 
-import com.advanced_project.interfaces.DaoInterface;
-import com.avanced_project.domain.Museum;
+import com.advanced_project.interfaces.VisitorDaoInterface;
 import com.avanced_project.domain.Visitor;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,11 +17,25 @@ import org.hibernate.Session;
  *
  * @author regis
  */
-public class MuseumDao implements DaoInterface<Museum>{
+public class VisitorDao implements VisitorDaoInterface<Visitor>{
 
     private Session session;
     @Override
-    public void save(Museum t) {
+    public Visitor findByUsername(String username) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Visitor> query = builder.createQuery(Visitor.class);
+        Root<Visitor> root = query.from(Visitor.class);
+        
+        query.select(root).where(builder.equal(root.get("username"), username));
+        
+        Visitor visitor = session.createQuery(query).getSingleResult();
+        session.close();
+        return visitor;
+    }
+
+    @Override
+    public void save(Visitor t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(t);
@@ -31,7 +44,7 @@ public class MuseumDao implements DaoInterface<Museum>{
     }
 
     @Override
-    public void update(Museum t) {
+    public void update(Visitor t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(t);
@@ -40,25 +53,25 @@ public class MuseumDao implements DaoInterface<Museum>{
     }
 
     @Override
-    public List<Museum> findAll() {
+    public List<Visitor> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Museum> query = builder.createQuery(Museum.class);
-        Root<Museum> root = query.from(Museum.class);
+        CriteriaQuery<Visitor> query = builder.createQuery(Visitor.class);
+        Root<Visitor> root = query.from(Visitor.class);
         
         query.select(root);
         
-        List<Museum> museums = session.createQuery(query).list();
+        List<Visitor> visitors = session.createQuery(query).list();
         session.close();
-        return museums;
+        return visitors;
     }
 
     @Override
-    public Museum findById(int id) {
+    public Visitor findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Museum museum = session.get(Museum.class, id);
+        Visitor visitor = session.get(Visitor.class, id);
         session.close();
-        return museum;
+        return visitor;
     }
     
 }

@@ -6,12 +6,13 @@
 package com.advanced_project.services;
 
 import com.advanced_project.dao.MuseumDao;
-import com.avanced_project.domain.Staff;
 import com.advanced_project.dao.UserDao;
+import com.advanced_project.interfaces.UserDaoInterface;
 import com.avanced_project.domain.Museum;
 import com.avanced_project.domain.MuseumStatus;
-import com.avanced_project.domain.StaffRole;
-import com.avanced_project.domain.StaffWorkingStatus;
+import com.avanced_project.domain.User;
+import com.avanced_project.domain.UserRole;
+import com.avanced_project.domain.UserWorkingStatus;
 
 /**
  *
@@ -19,22 +20,22 @@ import com.avanced_project.domain.StaffWorkingStatus;
  */
 public class AdminService {
     
-    private final UserDao userDao = new UserDao();
+    private final UserDaoInterface userDao = new UserDao();
     private final MuseumDao museumDao = new MuseumDao();
     
-    public void addManager(Staff staff){
-        staff.setStaffRole(StaffRole.MANAGER);
-        staff.setStaffWorkingStatus(StaffWorkingStatus.ACTIVE);
+    public void addManager(User staff){
+        staff.setUserRole(UserRole.MANAGER);
+        staff.setUserWorkingStatus(UserWorkingStatus.ACTIVE);
         userDao.save(staff);
     }
-    public void fireManager(int StaffId){
-        Staff s = (Staff) userDao.findByStaffId(StaffId);
-        s.setStaffWorkingStatus(StaffWorkingStatus.FIRED);
+    public void fireManager(int userId){
+        User s = (User) userDao.findById(userId);
+        s.setUserWorkingStatus(UserWorkingStatus.FIRED);
         userDao.update(s);
     }
-    public void suspendManager(int StaffId){
-        Staff s = (Staff) userDao.findByStaffId(StaffId);
-        s.setStaffWorkingStatus(StaffWorkingStatus.SUSPENDED);
+    public void suspendManager(int userId){
+        User s = (User) userDao.findById(userId);
+        s.setUserWorkingStatus(UserWorkingStatus.SUSPENDED);
         userDao.update(s);
     }
     public void addMuseum(Museum museum){

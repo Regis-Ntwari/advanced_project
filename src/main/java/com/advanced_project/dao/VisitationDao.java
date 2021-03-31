@@ -5,6 +5,8 @@
  */
 package com.advanced_project.dao;
 
+import com.advanced_project.interfaces.DaoInterface;
+import com.advanced_project.interfaces.VisitationDaoInterface;
 import com.avanced_project.domain.Museum;
 import com.avanced_project.domain.Visitation;
 import com.avanced_project.domain.VisitationOccurrenceStatus;
@@ -23,7 +25,7 @@ import org.hibernate.query.Query;
  *
  * @author regis
  */
-public class VisitationDao implements DaoInterface<Visitation>{
+public class VisitationDao implements VisitationDaoInterface<Visitation>{
 
     private Session session;
     @Override
@@ -59,6 +61,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         session.close();
         return visit;
     }
+    @Override
     public List<Visitation> findAllVisitationsByRequestStatus(VisitationRequestStatus vrs, Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {
@@ -78,6 +81,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         }
         return visits;
     }
+    @Override
     public List<Visitation> findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus vos, Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {
@@ -96,6 +100,7 @@ public class VisitationDao implements DaoInterface<Visitation>{
         }
         return visits;
     }
+    @Override
     public List<Visitation> findAllTodayVisitation(Museum museum){
         List<Visitation> visits = new ArrayList<>();
         try {

@@ -11,11 +11,16 @@ import com.avanced_project.domain.Visitation;
 import com.avanced_project.domain.VisitationOccurrenceStatus;
 import com.avanced_project.domain.VisitationRequestStatus;
 import com.avanced_project.domain.Visitor;
-import com.advanced_project.dao.DaoInterface;
+import com.advanced_project.interfaces.DaoInterface;
 import com.advanced_project.dao.MuseumDao;
 import com.advanced_project.dao.UserDao;
-import com.advanced_project.dao.UserDaoInterface;
+import com.advanced_project.interfaces.UserDaoInterface;
 import com.advanced_project.dao.VisitationDao;
+import com.advanced_project.dao.VisitationStatusDao;
+import com.advanced_project.dao.VisitorDao;
+import com.advanced_project.interfaces.VisitorDaoInterface;
+import com.avanced_project.domain.User;
+import com.avanced_project.domain.VisitationStatus;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -26,12 +31,14 @@ import java.util.List;
 public class VisitationService {
 
     private final VisitationDao visitationDao = new VisitationDao();
-    private final UserDaoInterface visitorDao = new UserDao();
-    private final DaoInterface<Museum> museumDao = new MuseumDao();
+    private final VisitorDaoInterface visitorDao = new VisitorDao();
+    private final DaoInterface museumDao = new MuseumDao();
+    private final DaoInterface visitationStatusDao = new VisitationStatusDao();
+    private final UserDaoInterface userDao = new UserDao();
 
     public void visit(int visitorId, int museumId, LocalDate visitationDate) {
         Visitor visitor = (Visitor) visitorDao.findById(visitorId);
-        Museum museum = museumDao.findById(museumId);
+        Museum museum = (Museum) museumDao.findById(museumId);
 
         Visitation visit = new Visitation();
         visit.setMuseum(museum);
@@ -46,61 +53,109 @@ public class VisitationService {
             EmailUtil.sendApprovalEmail(visit);
 
         }
+        visitationStatusDao.save(
+                new VisitationStatus(
+                        visit, 
+                        visitor, 
+                        visit.getOccurrenceStatus(), 
+                        visit.getRequestStatus(), 
+                        LocalDate.now()));
     }
 
-    public void cancelVisitation(int visitationId) {
+    public void cancelByUserVisitation(int userId,int visitationId) {
         Visitation visit = visitationDao.findById(visitationId);
+        User user = (User) userDao.findById(userId);
         visit.setRequestStatus(VisitationRequestStatus.CANCELLED);
         visitationDao.update(visit);
         if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
             EmailUtil.sendApprovalEmail(visit);
 
         }
+        visitationStatusDao.save(
+                new VisitationStatus(
+                        visit, 
+                        user, 
+                        visit.getOccurrenceStatus(), 
+                        visit.getRequestStatus(), 
+                        LocalDate.now()));
+    }
+    public void cancelByVisitorVisitation(int visitorId,int visitationId) {
+        Visitation visit = visitationDao.findById(visitationId);
+        Visitor visitor = (Visitor) userDao.findById(visitorId);
+        visit.setRequestStatus(VisitationRequestStatus.CANCELLED);
+        visitationDao.update(visit);
+        if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
+            EmailUtil.sendApprovalEmail(visit);
+
+        }
+        visitationStatusDao.save(
+                new VisitationStatus(
+                        visit, 
+                        visitor, 
+                        visit.getOccurrenceStatus(), 
+                        visit.getRequestStatus(), 
+                        LocalDate.now()));
     }
 
-    public void approveVisitation(int visitationId) {
+    public void approveVisitation(int userId, int visitationId) {
         Visitation visit = visitationDao.findById(visitationId);
+        User user = (User) userDao.findById(userId);
         visit.setRequestStatus(VisitationRequestStatus.APPROVED);
         visitationDao.update(visit);
         if (!visit.getVisitor().getEmail().equalsIgnoreCase("")) {
             EmailUtil.sendApprovalEmail(visit);
 
         }
+        visitationStatusDao.save(
+                new VisitationStatus(
+                        visit, 
+                        user, 
+                        visit.getOccurrenceStatus(), 
+                        visit.getRequestStatus(), 
+                        LocalDate.now()));
     }
 
-    public void occurVisitation(int visitationId) {
+    public void occurVisitation(int userId, int visitationId) {
         Visitation visit = visitationDao.findById(visitationId);
+        User user = (User) userDao.findById(userId);
         visit.setOccurrenceStatus(VisitationOccurrenceStatus.OCCURRED);
         visitationDao.update(visit);
+        visitationStatusDao.save(
+                new VisitationStatus(
+                        visit, 
+                        user, 
+                        visit.getOccurrenceStatus(), 
+                        visit.getRequestStatus(), 
+                        LocalDate.now()));
     }
 
     public List<Visitation> findAllTodayVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllTodayVisitation(m);
     }
 
     public List<Visitation> findAllPendingVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.PENDING, m);
     }
 
     public List<Visitation> findAllApprovedVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.APPROVED, m);
     }
 
     public List<Visitation> findAllCancelledVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllVisitationsByRequestStatus(VisitationRequestStatus.CANCELLED, m);
     }
 
     public List<Visitation> findAllNonOccurredVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.NOT_OCCURRED, m);
     }
 
     public List<Visitation> findAllOccurredVisitation(int museumId) {
-        Museum m = museumDao.findById(museumId);
+        Museum m = (Museum) museumDao.findById(museumId);
         return visitationDao.findAllVisitationByOccurrenceStatus(VisitationOccurrenceStatus.OCCURRED, m);
     }
 }

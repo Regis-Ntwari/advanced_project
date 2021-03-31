@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avanced_project.domain;
+package com.advanced_project.interfaces;
 
-import java.io.Serializable;
-import javax.persistence.Entity;
+import java.util.List;
 
 /**
  *
  * @author regis
+ * @param <T>
  */
-@Entity
-public class Admin extends User implements Serializable{
-
-    public Admin() {
-    }
-    
+public interface UserDaoInterface<T> extends DaoInterface<T>{
+    public T findByUsername(String username);
 }
