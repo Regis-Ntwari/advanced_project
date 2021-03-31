@@ -5,6 +5,7 @@ import com.avanced_project.domain.Museum;
 import com.avanced_project.domain.MuseumType;
 import com.avanced_project.domain.User;
 import com.avanced_project.domain.Visitation;
+import com.avanced_project.domain.VisitationStatus;
 import com.avanced_project.domain.Visitor;
 import java.util.Properties;
 import org.hibernate.HibernateException;
@@ -25,7 +26,7 @@ import org.hibernate.cfg.Environment;
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory(){
-        if(sessionFactory != null){
+        if(sessionFactory == null){
             try {
                 Configuration configuration = new Configuration();
                 
@@ -40,7 +41,6 @@ public class HibernateUtil {
                 settings.put(Environment.HBM2DDL_AUTO, "update");
                 
                 //showing SQL queries and formatting SQL
-                
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.FORMAT_SQL, "true");
                 
@@ -55,6 +55,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Visitor.class);
                 configuration.addAnnotatedClass(Visitation.class);
                 configuration.addAnnotatedClass(User.class);
+                configuration.addAnnotatedClass(VisitationStatus.class);
                 
                 sessionFactory = configuration.buildSessionFactory();
             } catch (HibernateException e) {
