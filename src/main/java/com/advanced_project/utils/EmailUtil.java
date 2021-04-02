@@ -5,8 +5,8 @@
  */
 package com.advanced_project.utils;
 
-import com.avanced_project.domain.Visitation;
-import com.avanced_project.domain.Visitor;
+import com.advanced_project.domain.Visitation;
+import com.advanced_project.domain.Visitor;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;

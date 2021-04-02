@@ -5,7 +5,9 @@
  */
 package com.advanced_project.interfaces;
 
-import java.util.List;
+import com.advanced_project.domain.UserRole;
+import com.advanced_project.domain.UserWorkingStatus;
+import java.util.Set;
 
 /**
  *
@@ -14,4 +16,5 @@ import java.util.List;
  */
 public interface UserDaoInterface<T> extends DaoInterface<T>{
     public T findByUsername(String username);
+    public Set<T> findAllUsersByRoleAndWorkingStatus(UserRole userRole, UserWorkingStatus userWorkingStatus);
 }

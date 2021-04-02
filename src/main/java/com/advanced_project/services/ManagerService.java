@@ -5,15 +5,16 @@
  */
 package com.advanced_project.services;
 
-import com.avanced_project.domain.UserWorkingStatus;
-import com.avanced_project.domain.Visitation;
-import com.avanced_project.domain.VisitationRequestStatus;
+import com.advanced_project.domain.UserWorkingStatus;
+import com.advanced_project.domain.Visitation;
+import com.advanced_project.domain.VisitationRequestStatus;
 import com.advanced_project.dao.UserDao;
 import com.advanced_project.dao.VisitationDao;
 import com.advanced_project.interfaces.UserDaoInterface;
 import com.advanced_project.interfaces.VisitationDaoInterface;
-import com.avanced_project.domain.User;
-import com.avanced_project.domain.UserRole;
+import com.advanced_project.domain.User;
+import com.advanced_project.domain.UserRole;
+import java.util.Set;
 
 /**
  *
@@ -29,7 +30,7 @@ public class ManagerService {
     }
     public void suspendReceptionist(int userId){
         User receptionist = (User) userDao.findById(userId);
-        receptionist.setUserWorkingStatus(UserWorkingStatus.SUSPENDED);
+        receptionist.setUserWorkingStatus(UserWorkingStatus.NOT_AVAILABLE);
         userDao.update(receptionist);
     }
     public void activateReceptionist(int userId){
@@ -39,7 +40,7 @@ public class ManagerService {
     }
     public void fireReceptionist(int userId){
         User receptionist = (User) userDao.findById(userId);
-        receptionist.setUserWorkingStatus(UserWorkingStatus.FIRED);
+        receptionist.setUserWorkingStatus(UserWorkingStatus.DISMISSED);
         userDao.update(receptionist);
     }
     public void approveVisit(int visitId){
@@ -51,5 +52,17 @@ public class ManagerService {
         Visitation visit = (Visitation) visitationDao.findById(visitId);
         visit.setRequestStatus(VisitationRequestStatus.CANCELLED);
         visitationDao.update(visit);
+    }
+    public Set<User> findAllActiveReceptionists(){
+        return userDao.findAllUsersByRoleAndWorkingStatus(UserRole.RECEPTIONIST, 
+                                                            UserWorkingStatus.ACTIVE);
+    }
+    public Set<User> findAllNonAvailableReceptionists(){
+        return userDao.findAllUsersByRoleAndWorkingStatus(UserRole.RECEPTIONIST, 
+                                                            UserWorkingStatus.NOT_AVAILABLE);
+    }
+    public Set<User> findAllDismissedReceptionists(){
+        return userDao.findAllUsersByRoleAndWorkingStatus(UserRole.RECEPTIONIST, 
+                                                            UserWorkingStatus.DISMISSED);
     }
 }

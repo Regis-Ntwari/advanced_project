@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.avanced_project.domain;
+package com.advanced_project.domain;
 
 /**
  *
  * @author regis
  */
-public enum VisitationOccurrenceStatus {
-    OCCURRED,NOT_OCCURRED
+public enum VisitationRequestStatus {
+    APPROVED,CANCELLED,PENDING
 }

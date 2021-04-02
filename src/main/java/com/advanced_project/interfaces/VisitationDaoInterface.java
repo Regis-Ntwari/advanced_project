@@ -5,9 +5,9 @@
  */
 package com.advanced_project.interfaces;
 
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.VisitationOccurrenceStatus;
-import com.avanced_project.domain.VisitationRequestStatus;
+import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.VisitationOccurrenceStatus;
+import com.advanced_project.domain.VisitationRequestStatus;
 import java.util.List;
 
 /**

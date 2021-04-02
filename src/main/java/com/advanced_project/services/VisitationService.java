@@ -6,11 +6,11 @@
 package com.advanced_project.services;
 
 import com.advanced_project.utils.EmailUtil;
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.Visitation;
-import com.avanced_project.domain.VisitationOccurrenceStatus;
-import com.avanced_project.domain.VisitationRequestStatus;
-import com.avanced_project.domain.Visitor;
+import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.Visitation;
+import com.advanced_project.domain.VisitationOccurrenceStatus;
+import com.advanced_project.domain.VisitationRequestStatus;
+import com.advanced_project.domain.Visitor;
 import com.advanced_project.interfaces.DaoInterface;
 import com.advanced_project.dao.MuseumDao;
 import com.advanced_project.dao.UserDao;
@@ -19,8 +19,8 @@ import com.advanced_project.dao.VisitationDao;
 import com.advanced_project.dao.VisitationStatusDao;
 import com.advanced_project.dao.VisitorDao;
 import com.advanced_project.interfaces.VisitorDaoInterface;
-import com.avanced_project.domain.User;
-import com.avanced_project.domain.VisitationStatus;
+import com.advanced_project.domain.User;
+import com.advanced_project.domain.VisitationStatus;
 import java.time.LocalDate;
 import java.util.List;
 

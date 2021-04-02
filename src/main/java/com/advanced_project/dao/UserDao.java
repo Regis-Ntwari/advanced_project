@@ -6,9 +6,12 @@
 package com.advanced_project.dao;
 
 import com.advanced_project.interfaces.UserDaoInterface;
-import com.avanced_project.domain.MuseumType;
-import com.avanced_project.domain.User;
+import com.advanced_project.domain.User;
+import com.advanced_project.domain.UserRole;
+import com.advanced_project.domain.UserWorkingStatus;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -81,4 +84,20 @@ public class UserDao implements UserDaoInterface<User>{
         session.close();
         return u;
     }
+
+    @Override
+    public Set<User> findAllUsersByRoleAndWorkingStatus(UserRole userRole, UserWorkingStatus userWorkingStatus) {
+        session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+        
+        query.select(root).where(builder.and(builder.equal(root.get("userRole"), userRole), 
+                                            builder.equal(root.get("userWorkingStatus"), userWorkingStatus)));
+        
+        List<User> users = session.createQuery(query).getResultList();
+        session.close();
+        return new HashSet<>(users);
+    }
+    
 }

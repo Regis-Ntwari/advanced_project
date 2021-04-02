@@ -5,8 +5,8 @@
  */
 package com.advanced_project.dao;
 
-import com.advanced_project.interfaces.VisitorDaoInterface;
-import com.advanced_project.domain.Visitor;
+import com.advanced_project.interfaces.DaoInterface;
+import com.advanced_project.domain.UserStatus;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -17,25 +17,11 @@ import org.hibernate.Session;
  *
  * @author regis
  */
-public class VisitorDao implements VisitorDaoInterface<Visitor>{
-
+public class UserStatusDao implements DaoInterface<UserStatus>{
     private Session session;
-    @Override
-    public Visitor findByUsername(String username) {
-        session = HibernateUtil.getSessionFactory().openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Visitor> query = builder.createQuery(Visitor.class);
-        Root<Visitor> root = query.from(Visitor.class);
-        
-        query.select(root).where(builder.equal(root.get("username"), username));
-        
-        Visitor visitor = session.createQuery(query).getSingleResult();
-        session.close();
-        return visitor;
-    }
 
     @Override
-    public void save(Visitor t) {
+    public void save(UserStatus t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(t);
@@ -44,7 +30,7 @@ public class VisitorDao implements VisitorDaoInterface<Visitor>{
     }
 
     @Override
-    public void update(Visitor t) {
+    public void update(UserStatus t) {
         session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(t);
@@ -53,25 +39,25 @@ public class VisitorDao implements VisitorDaoInterface<Visitor>{
     }
 
     @Override
-    public List<Visitor> findAll() {
+    public List<UserStatus> findAll() {
         session = HibernateUtil.getSessionFactory().openSession();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<Visitor> query = builder.createQuery(Visitor.class);
-        Root<Visitor> root = query.from(Visitor.class);
+        CriteriaQuery<UserStatus> query = builder.createQuery(UserStatus.class);
+        Root<UserStatus> root = query.from(UserStatus.class);
         
         query.select(root);
         
-        List<Visitor> visitors = session.createQuery(query).list();
+        List<UserStatus> report = session.createQuery(query).getResultList();
         session.close();
-        return visitors;
+        return report;
     }
 
     @Override
-    public Visitor findById(int id) {
+    public UserStatus findById(int id) {
         session = HibernateUtil.getSessionFactory().openSession();
-        Visitor visitor = session.get(Visitor.class, id);
+        UserStatus report = session.get(UserStatus.class, id);
         session.close();
-        return visitor;
+        return report;
     }
     
 }

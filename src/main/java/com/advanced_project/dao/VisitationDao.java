@@ -7,10 +7,10 @@ package com.advanced_project.dao;
 
 import com.advanced_project.interfaces.DaoInterface;
 import com.advanced_project.interfaces.VisitationDaoInterface;
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.Visitation;
-import com.avanced_project.domain.VisitationOccurrenceStatus;
-import com.avanced_project.domain.VisitationRequestStatus;
+import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.Visitation;
+import com.advanced_project.domain.VisitationOccurrenceStatus;
+import com.advanced_project.domain.VisitationRequestStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

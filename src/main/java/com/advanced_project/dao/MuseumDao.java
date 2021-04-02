@@ -6,8 +6,8 @@
 package com.advanced_project.dao;
 
 import com.advanced_project.interfaces.DaoInterface;
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.Visitor;
+import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.Visitor;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

@@ -1,12 +1,12 @@
 package com.advanced_project.dao;
 
 
-import com.avanced_project.domain.Museum;
-import com.avanced_project.domain.MuseumType;
-import com.avanced_project.domain.User;
-import com.avanced_project.domain.Visitation;
-import com.avanced_project.domain.VisitationStatus;
-import com.avanced_project.domain.Visitor;
+import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.MuseumType;
+import com.advanced_project.domain.User;
+import com.advanced_project.domain.Visitation;
+import com.advanced_project.domain.VisitationStatus;
+import com.advanced_project.domain.Visitor;
 import java.util.Properties;
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

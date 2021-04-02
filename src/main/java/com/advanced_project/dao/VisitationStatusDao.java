@@ -6,7 +6,7 @@
 package com.advanced_project.dao;
 
 import com.advanced_project.interfaces.DaoInterface;
-import com.avanced_project.domain.VisitationStatus;
+import com.advanced_project.domain.VisitationStatus;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

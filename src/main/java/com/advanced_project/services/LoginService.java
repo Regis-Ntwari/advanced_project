@@ -6,12 +6,19 @@
 package com.advanced_project.services;
 
 import com.advanced_project.dao.UserDao;
+import com.advanced_project.domain.User;
+import com.advanced_project.interfaces.UserDaoInterface;
 
 /**
  *
  * @author regis
  */
 public class LoginService {
-    private final UserDao userDao = new UserDao();
+    private final UserDaoInterface userDao = new UserDao();
+    
+    public User findByUsername(String username){
+        User user = (User) userDao.findByUsername(username);
+        return user;
+    }
     
 }
