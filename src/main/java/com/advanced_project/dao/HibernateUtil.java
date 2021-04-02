@@ -2,8 +2,11 @@ package com.advanced_project.dao;
 
 
 import com.advanced_project.domain.Museum;
+import com.advanced_project.domain.MuseumStatusTrack;
 import com.advanced_project.domain.MuseumType;
+import com.advanced_project.domain.Person;
 import com.advanced_project.domain.User;
+import com.advanced_project.domain.UserStatus;
 import com.advanced_project.domain.Visitation;
 import com.advanced_project.domain.VisitationStatus;
 import com.advanced_project.domain.Visitor;
@@ -56,6 +59,9 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Visitation.class);
                 configuration.addAnnotatedClass(User.class);
                 configuration.addAnnotatedClass(VisitationStatus.class);
+                configuration.addAnnotatedClass(Person.class);
+                configuration.addAnnotatedClass(UserStatus.class);
+                configuration.addAnnotatedClass(MuseumStatusTrack.class);
                 
                 sessionFactory = configuration.buildSessionFactory();
             } catch (HibernateException e) {
